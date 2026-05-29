@@ -1,0 +1,28 @@
+name: Contribution Snake
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: eq19/snk@master
+        with:
+          github_user_name: Johir2028
+          gif_out_path: dist/github-contribution-grid-snake.gif
+          svg_out_path: dist/github-contribution-grid-snake.svg
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Generate snake animation
+          branch: output
+          create_branch: true
+          file_pattern: dist/
